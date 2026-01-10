@@ -11,42 +11,28 @@ module traffic_controller(
 parameter   s0_green=0 , s1_yellow=1 , s2_green=2 , s3_yellow=3; // state encoding
 reg [1:0] ns ,ps;
 
-always @ (posedge clk or reset) begin
+always @ (posedge clk or posedge reset) begin
     if(reset) begin
-        light_NORTH=s0_green;
+        ps=s0_green;
 
     end
     else 
-       ps<=ps;
+       ps<=ns;
 end
 
-always @ (*) begin
+always @ (*) begin // next state logic 
     case(ps) 
             
           s0_green :begin
                 ns=s1_yellow;
 
-                light_NORTH=3'b001; // green
-
-                light_EAST=3'b001; // green
-
-                light_WEST= 3'b100; // red
-
-                light_SOUTH=3'b100; // red
+                
 
           end  
           s1_yellow :begin
 
                 ns=s2_green; 
 
-                
-                light_NORTH=3'b001; // yellow
-
-                light_EAST=3'b001; // yellow
-
-                light_WEST= 3'b100; // red
-
-                light_SOUTH=3'b100; // red
 
 
           end
@@ -54,8 +40,58 @@ always @ (*) begin
           s2_green : begin
                 
                  ns= s3_yellow;
+             
 
+          end
                  
+
+          s3_yellow: begin
+
+                ns= s0_green;
+
+          end
+
+          default: begin
+               
+                ns = s0_green;
+
+          end
+
+    endcase
+       
+end
+
+
+always @(*) begin //output state logic 
+
+      case(ps) 
+
+        s0_green : begin
+                   light_NORTH=3'b001; // green
+
+                  light_EAST=3'b001; // green
+
+                  light_WEST= 3'b100; // red
+
+                  light_SOUTH=3'b100; // red
+        end
+
+         s1_yellow :begin
+
+                  light_NORTH=3'b001; // yellow
+
+                  light_EAST=3'b001; // yellow
+
+                  light_WEST= 3'b100; // red
+
+                  light_SOUTH=3'b100; // red
+
+      
+        end
+
+
+         s2_green : begin
+
                 light_NORTH=3'b100; // red
 
                 light_EAST=3'b100 ; // red
@@ -65,12 +101,9 @@ always @ (*) begin
                 light_SOUTH=3'b001; // green
 
           end
-                 
 
+          
           s3_yellow: begin
-
-                ns= s0_green;
-
                 
                 light_NORTH=3'b100; // green
 
@@ -82,10 +115,8 @@ always @ (*) begin
 
           end
 
+          
           default: begin
-               
-                ns = s0_green;
-
                
                 light_NORTH=3'b100; // red
 
@@ -96,10 +127,7 @@ always @ (*) begin
                 light_SOUTH=3'b100; // red
 
           end
-
-    endcase
-       
+      endcase
 end
-
 
 endmodule
