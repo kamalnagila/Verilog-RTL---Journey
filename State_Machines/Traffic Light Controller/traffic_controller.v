@@ -69,9 +69,9 @@ always @(*) begin //output state logic
         s0_green : begin
                    light_NORTH=3'b001; // green
 
-                  light_EAST=3'b001; // green
+                  light_EAST=3'b100; // red
 
-                  light_WEST= 3'b100; // red
+                  light_WEST= 3'b001; // green
 
                   light_SOUTH=3'b100; // red
         end
@@ -80,9 +80,9 @@ always @(*) begin //output state logic
 
                   light_NORTH=3'b001; // yellow
 
-                  light_EAST=3'b001; // yellow
+                  light_EAST=3'b100; // red
 
-                  light_WEST= 3'b100; // red
+                  light_WEST= 3'b001; // yellow
 
                   light_SOUTH=3'b100; // red
 
@@ -94,9 +94,9 @@ always @(*) begin //output state logic
 
                 light_NORTH=3'b100; // red
 
-                light_EAST=3'b100 ; // red
+                light_EAST=3'b001 ; // green
 
-                light_WEST= 3'b001; // grren
+                light_WEST= 3'b100; // red
 
                 light_SOUTH=3'b001; // green
 
@@ -105,13 +105,13 @@ always @(*) begin //output state logic
           
           s3_yellow: begin
                 
-                light_NORTH=3'b100; // green
+                light_NORTH=3'b100; // red
 
-                light_EAST=3'b100; // green
+                light_EAST=3'b001; // yellow
 
-                light_WEST= 3'b001; // red
+                light_WEST= 3'b100; // red
 
-                light_SOUTH=3'b001; // red
+                light_SOUTH=3'b001; // yellow
 
           end
 
